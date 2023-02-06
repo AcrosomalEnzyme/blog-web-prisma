@@ -73,10 +73,14 @@ export class BlogsServices {
 
   //删除blog
   async deleteBlog(blogId: string) {
-    await this.prisma.blog.delete({
-      where: {
-        id: blogId,
-      },
-    });
+    try {
+      await this.prisma.blog.delete({
+        where: {
+          id: blogId,
+        },
+      });
+    } catch (error) {
+      throw new NotFoundException('Could not find blog.(invalided ID form).');
+    }
   }
 }
