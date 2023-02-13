@@ -14,26 +14,28 @@ import { AuthGuard } from '@nestjs/passport';
 import { LocalStrategy } from 'src/auth/local.strategy';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { AuthService } from 'src/auth/auth.service';
+import { GetUserDto } from './dto/getUser.dto';
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly userService: UsersService,
-    // private authService: AuthService,
-  ) {}
+  ) // private authService: AuthService,
+  {}
 
   // 获取全部user
   @Get()
-//   @Public()
+  //   @Public()
   async getAllUsers() {
     return await this.userService.getAllUsers();
   }
 
   // 获取单个user
   @Get(':userId')
-//   @Public()
-  async getBlog(
-    // @Param() getBlogDto: GetBlogDto,
+  //   @Public()
+  async getUser(
+    @Param() getUserDto: GetUserDto,
     @Param('userId') userId: string,
     // @Query() category: string
   ) {
@@ -42,9 +44,11 @@ export class UsersController {
 
   // 更新user
   @Patch(':userId')
-//   @Public()
+  //   @Public()
   async updateUser(
+    @Param() getUserDto: GetUserDto,
     @Param('userId') userId: string,
+    @Body() updateUserDto: UpdateUserDto,
     @Body('displayName') displayName: string,
     @Body('password') password: string,
   ) {
@@ -57,7 +61,7 @@ export class UsersController {
   @Public()
   @UseGuards(LocalAuthGuard)
   async removeUser(
-    // @Param() getBlogDto: GetBlogDto,
+    @Param() getUserDto: GetUserDto,
     @Param('userId') userId: string,
   ) {
     await this.userService.deleteUser(userId);

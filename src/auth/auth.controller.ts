@@ -11,6 +11,8 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 import { LocalAuthGuard } from './local-auth.guard';
 import { SetMetadata } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
+import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/reigister.dto';
 
 export const IS_PUBLIC_KEY = 'isPublic';
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
@@ -29,7 +31,7 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Public()
   @Post('login')
-  async login(@Request() req) {
+  async login(@Request() req, @Body() loginDto: LoginDto) {
     // console.log('herererer');
     // console.log(req.user);
     return this.authService.login(req.user);
@@ -40,6 +42,7 @@ export class AuthController {
   @Post('register')
   async register(
     @Request() req,
+    @Body() registerDto: RegisterDto,
     @Body('displayName') displayName: string,
     @Body('password') password: string,
   ) {
@@ -47,19 +50,11 @@ export class AuthController {
     return result;
   }
 
+  // @UseGuards(JwtAuthGuard)
+  // @Get('profile')
+  // getProfile(@Request() req) {
+  //   console.log(req.user);
+  //   return req.user;
+  // }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    console.log(req.user);
-    return req.user;
-  }
-
-  @Public()
-  // @UseGuards(LocalAuthGuard)
-  @Post('test')
-  async test(@Request() req) {
-    // console.log(req);
-    return null;
-  }
 }
