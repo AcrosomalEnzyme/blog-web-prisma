@@ -6,11 +6,13 @@ import { AuthService } from './auth.service';
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
-    super();
+    super({ userId: String });
   }
 
-  async validate(username: string, password: string): Promise<any> {
-    const user = await this.authService.validateUser(username, password);
+  // 要求包含username和password，并自动读取
+  async validate(userId: string, password: string): Promise<any> {
+    // console.log(userId);
+    const user = await this.authService.validateUser(userId, password);
     if (!user) {
       throw new UnauthorizedException();
     }

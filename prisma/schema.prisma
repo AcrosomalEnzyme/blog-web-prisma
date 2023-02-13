@@ -1,6 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
+// 更新schema后执行：npx prisma db push
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,11 +9,17 @@ datasource db {
 }
 
 model Blog {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  body String
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  title  String
+  body   String
   author String
-  time String
+  time   String
   // time DateTime @default(now())
   // updatedTime DateTime @updatedAt
+}
+
+model User {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  displayName String
+  password String
 }

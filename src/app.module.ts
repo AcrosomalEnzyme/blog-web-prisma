@@ -12,6 +12,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 // import { SetMetadata } from '@nestjs/common';
 
 
+// nest g module auth
 
 // imports ：导入其他模块中导出的Providers，以实现共享
 // providers ：模块中所有用到的功能类，模块内共享实用；
@@ -26,7 +27,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
   providers: [
     AppService,
     // 全局jwt
-    { provide: APP_GUARD, useClass: JwtAuthGuard }
+    // { provide: APP_GUARD, useClass: JwtAuthGuard }
   ],
 })
 export class AppModule {}

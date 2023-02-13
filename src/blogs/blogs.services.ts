@@ -17,6 +17,7 @@ export class BlogsServices {
     const result = await this.prisma.blog.create({
       data: { author: author, title: title, time: time, body: body },
     });
+    // console.log(result);
     return result;
   }
 
@@ -33,7 +34,7 @@ export class BlogsServices {
     return blog;
   }
 
-  // 查找具体的blog， 返回blog和index值
+  // 查找具体的blog， 返回blog
   async findBlog(blogId: string) {
     let blog;
     try {

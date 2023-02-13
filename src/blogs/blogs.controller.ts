@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
+import { Public } from 'src/auth/auth.controller';
 import { BlogsServices } from './blogs.services';
 import { AddBlogDto } from './dto/addBlog.dto';
 import { GetBlogDto } from './dto/getBlog.dto';
@@ -31,20 +32,22 @@ export class BlogsController {
       blogAuthor,
     );
 
-    console.log(generatedId);
-    console.log(typeof generatedId);
+    // console.log(generatedId);
+    // console.log(typeof generatedId);
     // return { id: generatedId };
     return generatedId;
   }
 
   //获取全部blog
   @Get()
+  @Public()
   async getAllBlogs() {
     return await this.blogService.getBlogs();
   }
 
   //获取单个blog
   @Get(':blogId')
+  @Public()
   async getBlog(
     @Param() getBlogDto: GetBlogDto,
     @Param('blogId') blogId: string,
